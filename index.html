@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="EventPointMesh: A framework for human mesh recovery using only event camera data, enabling accurate results in low-light and privacy-sensitive scenarios">
+  <meta name="keywords" content="Human Mesh Recovery, Event Camera, Point Cloud">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EventPointMesh: Human Mesh Recovery Solely from Event Point Clouds</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">EventPointMesh: Human Mesh Recovery Solely from Event Point Clouds</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ryosukehori.github.io/">Ryosuke Hori</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.st.keio.ac.jp/en/tprofile/ics/isogawa.html">Mariko Isogawa</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=zAedqx8AAAAJ&hl=en">Dan Mikami</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.st.keio.ac.jp/en/tprofile/ics/hideo.saito.html">Hideo Saito</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Keio University,</span>
+            <span class="author-block"><sup>2</sup>Kogakuin University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://ieeexplore.ieee.org/document/10683888"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/RyosukeHori/EventPointMesh"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" src="./static/images/Fig1.png" alt="Teaser Image" height="100%">
+      Fig. 1. We propose EventPointMesh, a method for 3D human mesh recovery using only event data. 
+      (a) Event cameras detect luminance changes with high temporal resolution and dynamic range, addressing issues such as motion blur and low frame rates in poorly-lit environments. 
+      (b) EventPointMesh processes event data as point clouds segmented by fixed intervals, enabling fast HMR unaffected by lighting conditions.
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- Abstract. -->
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            How much can we infer about human shape using an event camera that only detects the pixel 
+            position where the luminance changed and its timestamp? This neuromorphic vision technology 
+            captures changes in pixel values at ultra-high speeds, regardless of the variations in 
+            environmental lighting brightness. Existing methods for human mesh recovery (HMR) from event 
+            data need to utilize intensity images captured with a generic frame-based camera, rendering 
+            them vulnerable to low-light conditions, energy/memory constraints, and privacy issues. 
+            In contrast, we explore the potential of solely utilizing event data to alleviate these 
+            issues and ascertain whether it offers adequate cues for HMR, as illustrated in Fig.1. 
+            This is a quite challenging task due to the substantially limited information ensuing from 
+            the absence of intensity images. To this end, we propose EventPointMesh, a framework which 
+            treats event data as a three-dimensional (3D) spatio-temporal point cloud for reconstructing 
+            the human mesh. By employing a coarse-to-fine pose feature extraction strategy, we extract 
+            both global features and local features. The local features are derived by processing the 
+            spatio-temporally dispersed event points into groups associated with individual body segments. 
+            This combination of global and local features allows the framework to achieve a more accurate 
+            HMR, capturing subtle differences in human movements. Experiments demonstrate that our method 
+            with only sparse event data outperforms baseline methods.
+          </p>
+        </div>
+        <!--/ Abstract. -->
+
+        <br>
+        <!-- Network. -->
+        <h2 class="title is-3">Network Architecture</h2>
+        <div class="content has-text-justified">
+            <img id="teaser" src="./static/images/Fig2.png" alt="Teaser Image" height="100%">
+            Fig. 2. Pipeline of our event-based HMR method, EventPointMesh. It consists of four modules: 
+            Base Module, Keypoints Module, Anchor Points, and SMPL Module (Sec. III-A). 
+        </div>
+        <!--/ Network. -->
+
+
+        <br>
+        <!-- Dataset. -->
+        <h2 class="title is-3">Dataset</h2>
+        <div class="content has-text-justified">
+            <img id="teaser" src="./static/images/Fig4.png" alt="Teaser Image" height="100%">
+            Fig. 4. The EventPointMesh Dataset (EPMD) encompasses diverse actions from daily activities 
+            to sports motions. Subjects performed the actions multiple times in both well-lit and poorly-lit 
+            environments. EPMD comprises synchronized event data, intensity images, SMPL meshes, and optical MoCap data.
+        </div>
+        <!--/ Dataset. -->
+        
+        <!-- Results. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Results</h2>
+            <!-- <div class="hero-body"> -->
+              <video id="results" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/results.mp4"
+                        type="video/mp4">
+              </video>
+            <!-- </div> -->
+          </div>
+        </div>
+        <!--/ Results. -->
+
+      </div>
+    </div>
+    
+
+
+    <br>
+    <!-- Application. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Potential Use Case</h2>
+        <div class="content has-text-justified">
+          This method's ability to accurately recover 3D human meshes from event data, even in challenging lighting 
+          conditions, makes it particularly suitable for VR applications, enabling seamless and real-time human motion 
+          representation in low-light environments, dynamic scenes, or privacy-sensitive settings. 
+          The following videos demonstrate examples of motions estimated from event data using EventPointMesh, applied to 3D characters.
+        </div>
+          <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item item-steve">
+                <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+                  <source src="./static/videos/character1.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-chair-tp">
+                <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+                  <source src="./static/videos/character2.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+                  <source src="./static/videos/character3.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+              <div class="item item-fullbody">
+                <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+                  <source src="./static/videos/character4.mp4"
+                          type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+      @ARTICLE{Hori2024EPM,
+          author = {Hori, Ryosuke and Isogawa, Mariko and Mikami, Dan and Saito, Hideo},
+          journal = {IEEE Transactions on Visualization and Computer Graphics (TVCG)}, 
+          title = {EventPointMesh: Human Mesh Recovery Solely From Event Point Clouds}, 
+          year = {2024},
+          pages = {1-18},
+          doi = {10.1109/TVCG.2024.3462816}
+      }
+      </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This page was built using the  <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">
+              Academic Project Page Template</a> which was adopted from the 
+            <a href="https://nerfies.github.io/">Nerfies</a> project page.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
