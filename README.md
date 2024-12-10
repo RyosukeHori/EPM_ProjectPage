@@ -1,8 +1,8 @@
-# Nerfies
+# EventPointMesh
 
-This is the repository that contains source code for the [EventPointMesh website](https://nerfies.github.io).
+This is the repository that contains source code for the [EventPointMesh website](https://ryosukehori.github.io/EPM_ProjectPage/).
 
-If you find Nerfies useful for your work please cite:
+If you find EventPointMesh useful for your work please cite:
 ```
 @ARTICLE{Hori2024EPM,
   author = {Hori, Ryosuke and Isogawa, Mariko and Mikami, Dan and Saito, Hideo},
