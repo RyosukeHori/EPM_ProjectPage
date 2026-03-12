@@ -1,0 +1,6 @@
+# EventPointMesh Project Page - allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location (helps search engines discover pages)
+Sitemap: https://ryosukehori.github.io/EPM_ProjectPage/sitemap.xml
